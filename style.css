@@ -49,3 +49,32 @@ button {
 .paragraph {
   padding: 20px;
 }
+
+/* scorll content */
+
+.scorll-content {
+  position: relative;
+}
+
+.scroll-item {
+  height: 100vh;
+  padding-top: 1px;
+  margin: 2rem;
+}
+
+.content-title {
+  display: flex;
+  padding: 1em 0;
+  line-height: 1.2;
+  flex-direction: column;
+  font-size: 9vw;
+  font-weight: bold;
+}
+
+.content-btn {
+  background-color: #222;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  font-weight: bold;
+}
