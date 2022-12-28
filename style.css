@@ -78,3 +78,50 @@ button {
   border-radius: 100px;
   font-weight: bold;
 }
+
+/* panel */
+
+.panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  perspective: 550px;
+  transition: 0.5s opacity;
+}
+
+.panel-list {
+  transform-style: preserve-3d;
+  transition: 1s;
+  will-change: transform;
+}
+
+.panel-item {
+  position: absolute;
+  left: 50vw;
+  top: 50vw;
+  width: 300px;
+  height: 300px;
+  margin: -150px 0 0 -150px;
+  opacity: 0.3;
+  transform-style: preserve-3d;
+  transition: 0.5s;
+}
+.panel-side img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: auto;
+  height: 100%;
+  max-width: none;
+  transform: translate(-50%, -50%);
+  opacity: 0.2;
+  mix-blend-mode: luminosity;
+}
+
+.copyright {
+  margin-top: 1rem;
+  font-size: 0.7rem;
+  text-align: center;
+}
