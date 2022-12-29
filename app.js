@@ -3,6 +3,10 @@ let loaderElem;
 let panelIitemElem;
 let panelIistElem;
 
+let observerElem;
+let scroll;
+let prevPageYOffset;
+
 let PanelNum = 10;
 let panelSize = 300;
 let uniteRadian = (2 * Math.PI) / PanelNum;
@@ -12,6 +16,7 @@ function setElem() {
   loaderElem = document.querySelector(".loader");
   panelIitemElem = document.querySelectorAll(".panel-item");
   panelIistElem = document.querySelector(".panel-list");
+  observerElem = document.querySelectorAll(".observer");
 }
 
 function setPanelItem() {
@@ -33,4 +38,22 @@ window.addEventListener("load", () => {
   document.body.classList.remove("loader-event");
 
   setPanelItem();
+
+  const io = new IntersectionObserver((entries, observer) => {
+    for (let i = 0; i < entries.length; i++) {
+      console.log(entries[i].target);
+    }
+  });
+  observerElem.forEach((item) => {
+    io.observe(item);
+  });
+});
+
+window.addEventListener("scroll", () => {
+  if (prevPageYOffset > window.pageYOffset) {
+    scroll = "up";
+  } else {
+    scroll = "dowm";
+  }
+  prevPageYOffset = window.pageYOffset;
 });
