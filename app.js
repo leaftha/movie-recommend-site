@@ -2,10 +2,15 @@ let loaderElem;
 
 let panelIitemElem;
 let panelIistElem;
+let panelElem;
+
+let header;
 
 let observerElem;
 let scroll;
 let prevPageYOffset;
+let currentIndex;
+let currentPanel;
 
 let PanelNum = 10;
 let panelSize = 300;
@@ -17,6 +22,7 @@ function setElem() {
   panelIitemElem = document.querySelectorAll(".panel-item");
   panelIistElem = document.querySelector(".panel-list");
   observerElem = document.querySelectorAll(".observer");
+  panelElem = document.querySelector(".panel");
 }
 
 function setPanelItem() {
@@ -26,6 +32,25 @@ function setPanelItem() {
       uniteDegree * i
     }deg) translateZ(${-dist}px)`;
   }
+}
+
+function removeActive() {
+  if (currentPanel) {
+    currentPanel.classList.remove("active");
+  }
+}
+
+function setCurrentPanel() {
+  removeActive();
+  currentPanel = panelIitemElem[currentIndex];
+  currentPanel.classList.add("active");
+}
+
+function rotatePanel() {
+  panelIistElem.style.transform = `
+    translateZ(${PanelNum * 85}px)
+    rotateY(${-uniteDegree * currentIndex}deg)`;
+  setCurrentPanel();
 }
 
 window.addEventListener("load", () => {
@@ -41,9 +66,46 @@ window.addEventListener("load", () => {
 
   const io = new IntersectionObserver((entries, observer) => {
     for (let i = 0; i < entries.length; i++) {
-      console.log(entries[i].target);
+      if (entries[i].isIntersecting) {
+        if (entries[i].target.classList.contains("observer-start")) {
+          currentIndex = 0;
+          rotatePanel();
+          continue;
+        }
+        const panelIndex = entries[i].target.dataset.panelIndex * 1;
+        if (panelIndex >= 0) {
+          if (scroll === "up") {
+            currentIndex = entries[i].target.dataset.panelIndex * 1 + 1;
+          } else {
+            currentIndex = entries[i].target.dataset.panelIndex;
+          }
+          if (currentIndex < PanelNum) {
+            rotatePanel();
+          }
+        }
+        if (
+          scroll === "up" &&
+          entries[i].target.classList.contains("header-content")
+        ) {
+          panelIistElem.style.transform = `
+              translateZ(0px)
+              rotateY(0deg)`;
+          removeActive();
+        }
+
+        if (
+          scroll === "down" &&
+          entries[i].target.classList.contains("observer-end")
+        ) {
+          panelElem.classList.add("done");
+        }
+        if (scroll === "up" && currentIndex === PanelNum - 1) {
+          panelElem.classList.remove("done");
+        }
+      }
     }
   });
+
   observerElem.forEach((item) => {
     io.observe(item);
   });
@@ -53,7 +115,7 @@ window.addEventListener("scroll", () => {
   if (prevPageYOffset > window.pageYOffset) {
     scroll = "up";
   } else {
-    scroll = "dowm";
+    scroll = "down";
   }
   prevPageYOffset = window.pageYOffset;
 });
