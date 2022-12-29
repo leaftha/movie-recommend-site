@@ -127,6 +127,47 @@ button {
   text-align: center;
 }
 
+/* loader */
+
+@keyframes loader-ani {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  opacity: 0;
+  background-color: #fff;
+}
+
+.loader-event {
+  overflow: hidden;
+}
+
+.loader-event .loader {
+  opacity: 1;
+}
+
+.loader-ring {
+  width: 30px;
+  height: 30px;
+  border: 5px solid #222;
+  border-color: #222 transparent transparent;
+  border-radius: 50%;
+  animation: loader-ani 1s infinite linear;
+}
+
 @media (min-width: 960px) {
   .paragraph {
     width: 900px;
