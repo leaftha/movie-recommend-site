@@ -1,3 +1,5 @@
+// import { data } from "./data";
+
 let loaderElem;
 
 let panelIitemElem;
