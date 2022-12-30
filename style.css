@@ -8,6 +8,10 @@ body {
   background: #fff;
 }
 
+body.lock {
+  overflow: hidden;
+}
+
 a {
   color: #222;
 }
@@ -88,6 +92,7 @@ button {
   height: 100vh;
   perspective: 550px;
   transition: 0.5s opacity;
+  z-index: -100;
 }
 
 .panel-list {

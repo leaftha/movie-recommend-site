@@ -1,12 +1,14 @@
-// import { data } from "./data";
+import { data } from "./data.js";
+import { ProjectView } from "./ProjectView.js";
 
 let loaderElem;
+
+let projectview;
 
 let panelIitemElem;
 let panelIistElem;
 let panelElem;
-
-let header;
+let scrollListElem;
 
 let observerElem;
 let scroll;
@@ -25,6 +27,7 @@ function setElem() {
   panelIistElem = document.querySelector(".panel-list");
   observerElem = document.querySelectorAll(".observer");
   panelElem = document.querySelector(".panel");
+  scrollListElem = document.querySelector(".scroll-list");
 }
 
 function setPanelItem() {
@@ -65,6 +68,8 @@ window.addEventListener("load", () => {
   document.body.classList.remove("loader-event");
 
   setPanelItem();
+
+  projectview = new ProjectView();
 
   const io = new IntersectionObserver((entries, observer) => {
     for (let i = 0; i < entries.length; i++) {
@@ -111,13 +116,19 @@ window.addEventListener("load", () => {
   observerElem.forEach((item) => {
     io.observe(item);
   });
-});
 
-window.addEventListener("scroll", () => {
-  if (prevPageYOffset > window.pageYOffset) {
-    scroll = "up";
-  } else {
-    scroll = "down";
-  }
-  prevPageYOffset = window.pageYOffset;
+  window.addEventListener("scroll", () => {
+    if (prevPageYOffset > window.pageYOffset) {
+      scroll = "up";
+    } else {
+      scroll = "down";
+    }
+    prevPageYOffset = window.pageYOffset;
+  });
+
+  scrollListElem.addEventListener("click", (e) => {
+    if (e.target.classList.contains("content-btn")) {
+      projectview.show(data[e.target.dataset.panelIndex]);
+    }
+  });
 });
