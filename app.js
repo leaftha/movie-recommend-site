@@ -16,6 +16,8 @@ let prevPageYOffset;
 let currentIndex;
 let currentPanel;
 
+let currentSlide = 0;
+
 let PanelNum = 10;
 let panelSize = 300;
 let uniteRadian = (2 * Math.PI) / PanelNum;
@@ -69,7 +71,7 @@ window.addEventListener("load", () => {
 
   setPanelItem();
 
-  projectview = new ProjectView();
+  projectview = new ProjectView(currentSlide);
 
   const io = new IntersectionObserver((entries, observer) => {
     for (let i = 0; i < entries.length; i++) {

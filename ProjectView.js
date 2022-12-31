@@ -1,12 +1,23 @@
 export class ProjectView {
-  constructor() {
+  constructor(currentSlide) {
     this.bodyElem = document.createElement("div");
     this.bodyElem.classList.add("cover-panel");
-    document.body.appendChild(this.bodyElem);
 
+    this.currentSlide = currentSlide;
+
+    document.body.appendChild(this.bodyElem);
     this.bodyElem.addEventListener("click", (e) => {
       if (e.target.classList.contains("back-btn")) {
         this.close();
+      }
+    });
+
+    this.bodyElem.addEventListener("click", (e) => {
+      if (
+        e.target.classList.contains("prev") ||
+        e.target.classList.contains("next")
+      ) {
+        this.slide(e);
       }
     });
   }
@@ -29,7 +40,11 @@ export class ProjectView {
                         <li class="slide-item"><img src="${data.slide2}" alt="" srcset=""></li>
                         <li class="slide-item"><img src="${data.slide3}" alt="" srcset=""></li>
                     </ul>
-                </div>
+                    <div class= "btn">
+                      <button class="prev"><</button>
+                      <button class="next">></button>
+                    </div>
+                  </div>
                 <div class="project-view-desc width-setter">${data.description}</div>
             </div>
         </section>
@@ -47,5 +62,23 @@ export class ProjectView {
       this.bodyElem.classList.remove("active", "close");
       clearTimeout(timerId);
     }, 1000);
+    this.currentSlide = 0;
+  }
+
+  slide(e) {
+    let sliderElem = document.querySelector(".slide-list");
+    let sliderImgElem = document.querySelector(".slide-item");
+    let imgSize = sliderImgElem.clientWidth;
+    if (e.target.classList.contains("next") && this.currentSlide < 2) {
+      this.currentSlide += 1;
+      sliderElem.style.transform = `translateX(${
+        -this.currentSlide * imgSize
+      }px)`;
+    } else if (e.target.classList.contains("prev") && this.currentSlide > 0) {
+      this.currentSlide -= 1;
+      sliderElem.style.transform = `translateX(${
+        -this.currentSlide * imgSize
+      }px)`;
+    }
   }
 }

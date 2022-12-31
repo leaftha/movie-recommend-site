@@ -151,7 +151,7 @@
   left: 0;
   top: 0;
   width: 1050px;
-  transform: 0.5s;
+  transition: 0.5s;
 }
 
 .slide-item {
@@ -165,7 +165,13 @@
   height: auto;
 }
 
-.slide-list {
+.btn {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  transform: translateY(170px);
 }
 
 @media (min-width: 600px) {
